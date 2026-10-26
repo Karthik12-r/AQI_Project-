@@ -1,0 +1,118 @@
+Act as a professional academic report writer, technical editor, and document-formatting expert specializing in final-year engineering project reports.
+
+I have provided you with:
+1. My complete AQI project report content extracted from my actual project.
+2. Output images, graphs, charts, tables, and other project screenshots.
+3. A reference PDF from my college that demonstrates the required report formatting, including headers, fonts, text sizes, heading styles, spacing, margins, and overall page layout.
+
+Your task is to transform these materials into a **complete, polished, submission-ready final-year B.E. project report**.
+
+## 1. Follow the reference PDF precisely
+
+First, carefully inspect the reference PDF and identify its formatting conventions.
+
+Match the reference as closely as possible for:
+- Page size and orientation.
+- Page margins.
+- Header and footer design.
+- Header text, placement, font, and size.
+- Body font and text size.
+- Chapter titles and section headings.
+- Heading numbering and hierarchy.
+- Line spacing, paragraph spacing, and alignment.
+- Page numbering and placement.
+- Table formatting and figure captions.
+- Front-page layout.
+- Table of contents and preliminary-page numbering, where applicable.
+
+Treat the PDF as a formatting reference, not as content to copy. Do not invent formatting specifications that cannot be determined from the PDF. If an exact font is unclear, choose the closest professional match.
+
+## 2. Required report structure
+
+Organize my report in this order, following the college reference format:
+
+1. Front Page
+2. Acknowledgement
+3. Table of Contents
+4. Abstract
+5. Introduction
+6. Materials and Methods
+7. Study Dates, Data Collection, and Analysis Methods
+8. Main Chapters:
+   - Winter AQI Trend Analysis
+   - Pollutant Analysis
+   - Machine Learning Methodology
+   - Results and Discussion
+9. Results and Decision/Interpretation
+10. Conclusion and Future Work
+11. References
+12. Appendices, if required
+
+You may organize the main chapters into numbered chapters and subsections to improve academic readability, while retaining all required sections.
+
+## 3. Preserve the actual project evidence
+
+My project is titled:
+
+**Winter Air Quality Index (AQI) Analysis and Prediction for Peenya, Bengaluru, Using CPCB Data and Machine Learning.**
+
+Use the supplied project material as the source of truth.
+
+- Preserve actual dataset values, dates, sample counts, statistics, and model metrics.
+- Use my supplied charts and screenshots in the relevant sections.
+- Add meaningful figure numbers, captions, and references in the text.
+- Use appropriate tables for numerical comparisons.
+- Explain each graph, table, and model result in clear academic language.
+- Preserve the distinctions between recorded AQI and pollutant-derived AQI.
+- Clearly disclose differences in data coverage and methodology across the three winters.
+- State honestly that none of the tested machine-learning models outperformed the persistence baseline if supported by the supplied results.
+- Do not claim that a following-year winter AQI forecast was completed unless my supplied evidence confirms it.
+- Do not invent data, references, author names, guide details, experiments, or conclusions.
+- Do not copy large sections of the reference PDF.
+
+If any information is missing or inconsistent, flag it for me rather than silently guessing.
+
+## 4. Academic writing quality
+
+- Use formal, clear, original academic English appropriate for a final-year engineering student.
+- Explain technical terms when they first appear.
+- Maintain consistency across the abstract, methodology, results, and conclusion.
+- Avoid repetition, generic filler, unsupported claims, and excessively complicated wording.
+- Include equations, tables, and diagrams where they genuinely help explain the implemented methodology.
+- Use a consistent citation and reference style based on the supplied materials.
+- Ensure every figure and table is numbered and mentioned in the relevant text.
+- Do not insert images merely for decoration.
+
+## 5. Front page and acknowledgements
+
+Use the student, department, institution, academic year, and guide details provided in my materials. If a required detail is missing, use a clearly marked placeholder instead of inventing it.
+
+Format the front page according to the reference PDF. Keep the acknowledgement professional and appropriate for an academic submission.
+
+## 6. Final document requirements
+
+I need a properly formatted **Microsoft Word document (.docx)**, not just report text in the chat.
+
+- Apply consistent styles to chapters, headings, paragraphs, tables, headers, and footers.
+- Generate an automatic table of contents if supported.
+- Insert the supplied images at suitable sizes without distortion.
+- Keep captions with their figures wherever possible.
+- Avoid blank pages, overlapping text, broken tables, and inconsistent page numbering.
+- Ensure that headings and paragraphs are not cut off awkwardly across pages.
+- Include all required sections and verify that no supplied project findings have been accidentally omitted.
+- Check the final document's layout before delivering it.
+
+If you can create files, produce the finished `.docx` document and provide it to me. If PDF export is available, also provide a matching PDF for preview.
+
+## Final quality check
+
+Before delivering the report, verify:
+1. The report follows the reference PDF's formatting conventions.
+2. All required sections are included.
+3. The figures and tables are readable and correctly captioned.
+4. The numerical findings match my supplied project evidence.
+5. The references are genuine and consistent with the supplied sources.
+6. No unsupported claims or invented details have been added.
+7. The document is ready for my final review and college submission.
+
+**Please begin by inspecting all the supplied materials, then create the complete formatted report. Do not stop after giving me an outline or asking me to format it manually.**

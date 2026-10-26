@@ -1,0 +1,487 @@
+# Report-Writing Reference Document
+
+**Purpose:** Structured, evidence-based reference compiled from workspace. Intended for Claude AI to draft the final college project report.
+
+## 1. Front Page
+
+- **Project title:** Winter Air Quality Index (AQI) Analysis and Prediction for Peenya, Bengaluru, Using CPCB Data and Machine Learning
+- **Student name:** [PLACEHOLDER: Student Name] (Not found in workspace)
+- **Roll / Registration number:** [PLACEHOLDER] (Not found in workspace)
+- **Department:** [PLACEHOLDER: Department name] (Not found in workspace)
+- **College / Institution:** [PLACEHOLDER: College name] (Not found in workspace)
+- **Degree / Programme:** [PLACEHOLDER: e.g., B.E./B.Tech. in ...] (Not found in workspace)
+- **Academic year / Semester:** [PLACEHOLDER: e.g., 2025-26, 7th Semester] (Not found in workspace)
+- **Project guide / Supervisor:** [PLACEHOLDER: Guide name and designation] (Not found in workspace)
+- **Head of Department (HOD):** [PLACEHOLDER] (Not found in workspace)
+- **Principal:** [PLACEHOLDER] (Not found in workspace)
+- **University / Affiliation:** [PLACEHOLDER] (Not found in workspace)
+- **Station studied:** Peenya, Bengaluru - CPCB monitoring station `site_163`, Karnataka, India
+
+> No student/guide/department/college identifiers exist in the workspace; supply them.
+
+---
+
+## 2. Acknowledgement (draft)
+
+> I express sincere gratitude to my project guide, [PLACEHOLDER: Guide Name], [PLACEHOLDER: Designation], for invaluable guidance and support. I thank the Head of the Department, [PLACEHOLDER: HOD Name], for facilities and academic environment. I thank the Principal, [PLACEHOLDER: Principal Name], and faculty of [PLACEHOLDER: Department Name] for support and suggestions. I acknowledge the Central Pollution Control Board (CPCB) for air-quality monitoring data, and the open-source Python scientific community (pandas, NumPy, scikit-learn, SciPy, Matplotlib, Seaborn). Finally, I thank my family and friends for constant motivation.
+
+---
+
+## 3. Table of Contents (suggested)
+
+1. Title Page
+2. Acknowledgement
+3. Table of Contents
+4. List of Figures
+5. List of Tables
+6. Abstract
+
+Chapter 1 - Introduction (1.1 Background; 1.2 Problem Statement; 1.3 Aim; 1.4 Objectives; 1.5 Scope and Study Area; 1.6 Significance)
+
+Chapter 2 - Literature Review (not present in workspace; add if required)
+
+Chapter 3 - Materials and Methods (3.1 Software and Tools; 3.2 Data Sources; 3.3 Data Cleaning and Missing-Data Handling; 3.4 CPCB AQI Methodology; 3.5 Dataset Verification; 3.6 Workflow)
+
+Chapter 4 - Study Dates and Analysis Methods (4.1 Winter Periods; 4.2 Daily Processing; 4.3 Recorded vs Pollutant-Derived AQI; 4.4 Coverage Differences; 4.5 Track 1; 4.6 Track 2)
+
+Chapter 5 - Winter AQI Trend Analysis / Track 1 (5.1 Seasonal Stats; 5.2 Monthly; 5.3 Category Distribution; 5.4 Observations and Caveats)
+
+Chapter 6 - Pollutant Dynamics and Dominance / Track 2 (6.1 Dominance; 6.2 Correlations; 6.3 PM2.5/PM10 Ratio; 6.4 Diurnal and Monthly Profiles)
+
+Chapter 7 - Machine Learning Methodology / Step 5 (7.1 Dataset and Target; 7.2 Feature Engineering; 7.3 Imputation; 7.4 Models and Hyperparameters; 7.5 Train/Test Split; 7.6 Metrics)
+
+Chapter 8 - Results and Discussion (8.1 Validation; 8.2 Winter Summary; 8.3 Pollutant Findings; 8.4 Model Comparison; 8.5 Interpretation)
+
+Chapter 9 - Conclusion and Future Work
+
+Chapter 10 - References
+
+Appendices: A CPCB Breakpoint Tables; B Dataset Descriptions; C Output Tables/Figures Index; D Test Summary
+
+Page numbers to be added later.
+
+---
+
+## 4. Abstract
+
+This project analyzes winter air quality at the CPCB monitoring station Peenya, Bengaluru (site_163) across Winter 2023, Winter 2024, and Winter 2025, and evaluates a next-day AQI prediction experiment. The verified pollutant-derived daily AQI dataset (`peenya_aqi_2024_2025_validated_estimates.csv`) contains 731 calendar days (2024-01-01 to 2025-12-31), of which 668 have valid CPCB AQI values. An independent recalculation matched all 668 valid days within 0.0005 AQI units with 100% prominent-pollutant agreement. Winter descriptive analysis shows Winter 2023 recorded AQI mean 71.86 with high volatility (SD 49.64), Winter 2024 hybrid mean 83.52, and Winter 2025 pollutant-derived mean 82.72 with comparatively low volatility (SD 12.95). In 140 validated winter days, PM10 was the prominent pollutant on 117 days (83.57%). PM2.5 and PM10 correlated strongly (Pearson r = 0.881, Spearman rho = 0.889). A chronological next-day prediction experiment used 55 training examples (targets 2024-01-03 to 2024-02-29) and 74 held-out test examples (targets 2024-12-01 to 2025-02-28). No tested machine-learning model outperformed the persistence baseline on MAE/RMSE (persistence MAE 9.25, RMSE 11.92; Random Forest MAE 10.54, RMSE 13.49; Gradient Boosting MAE 12.41, RMSE 15.66; Linear Regression MAE 33.85, RMSE 46.71). Results are preliminary due to small samples and possible seasonal/domain shift. No following-year (post-2025) winter AQI forecast was performed.
+
+**Objectives (from `reports/final_project_report.md` section 4):**
+- Verify a CPCB-derived daily AQI dataset against independent hourly recalculation.
+- Describe winter AQI patterns for Winter 2023, Winter 2024, and Winter 2025.
+- Analyze pollutant dominance, correlations, PM2.5/PM10 ratios, and diurnal/monthly profiles.
+- Build a date-aware next-day AQI prediction dataset with chronological train/test split.
+- Compare persistence, linear regression, random forest, and gradient boosting on held-out winter 2025 data.
+- Document limitations and avoid unsupported claims of model superiority or deployment readiness.
+
+**Key findings (summary):**
+- Verified daily dataset: 731 calendar days, 668 valid AQI; independent recalculation agrees within <=0.0005 AQI units; 100% prominent-pollutant agreement; 0 validity mismatches.
+- Winter 2023: recorded hourly AQI averaged by day; mean 71.86, SD 49.64, median 53.96; 90/90 valid days; range 39.00-250.42; 6 Poor days.
+- Winter 2024: hybrid (Dec 2023 recorded average + Jan-Feb 2024 pollutant-derived); 91 calendar days, 90 valid, 1 missing; mean 83.52, SD 21.89.
+- Winter 2025: pollutant-derived; 90 calendar days, 81 valid, 9 missing; mean 82.72, SD 12.95; 81.1% Satisfactory days; no Poor/Severe days.
+- Pollutant dominance (140 validated winter days): PM10 on 117 days (83.57%); O3 14 (10.00%); CO 7 (5.00%); PM2.5 2 (1.43%); 0 ties.
+- PM2.5-PM10: Pearson r = 0.881, Spearman rho = 0.889 (N=139).
+- PM2.5/PM10 ratio: combined mean 0.4981 +/- 0.0684 (median 0.5094).
+- Next-day prediction: persistence baseline best (MAE 9.25, RMSE 11.92); no ML model outperformed it.
+
+**Limitations (from workspace):**
+- Small sample: 55 training and 74 test examples.
+- Training (Jan-Feb 2024) and test (Dec 2024-Feb 2025) periods differ seasonally; possible domain shift.
+- 16 of 74 test dates had at least one imputed predictor (17 instances).
+- Winter 2023 uses recorded hourly AQI; later winters use pollutant-derived AQI; direct year-to-year equivalence not justified.
+- Track 2 covers only 140 validated days and excludes incomplete-pollutant dates.
+- No hyperparameter tuning or cross-validation beyond the specified chronological split.
+- No claim of generalization to other locations, years, or operational deployment.
+
+---
+## 5. Introduction
+
+### 5.1 Background
+
+Winter air quality in Indian cities is frequently elevated due to shallow boundary layers, reduced dispersion, and continued emissions. Peenya, Bengaluru, is an industrial area with substantial traffic and manufacturing activity. The project uses CPCB monitoring data for the Peenya station (site_163).
+
+### 5.2 Problem Statement
+
+The project addresses two questions:
+1. What are the observed winter AQI patterns and dominant pollutants at Peenya across recent winters?
+2. Can next-day AQI be predicted from recent pollutant and AQI history using standard machine-learning models?
+
+### 5.3 Aim
+
+To analyze winter air quality at Peenya, Bengaluru using CPCB data and to evaluate a reproducible next-day AQI prediction pipeline.
+
+### 5.4 Objectives
+
+See Section 4 objectives list.
+
+### 5.5 Scope and Study Area
+
+- Station: Peenya, Bengaluru - CPCB (`site_163`), Karnataka, India.
+- Winter 2023: 2022-12-01 to 2023-02-28 (90 calendar days).
+- Winter 2024: 2023-12-01 to 2024-02-29 (91 calendar days, leap year).
+- Winter 2025: 2024-12-01 to 2025-02-28 (90 calendar days).
+- Pollutant verification and Track 2 cover 2024-01-01 to 2025-02-28 (150 calendar days in winter months; 140 validated).
+- Step 5 prediction experiment: targets in 2024-01 to 2024-02 for training and 2024-12 to 2025-02 for testing.
+
+### 5.6 Significance
+
+The work emphasizes methodological transparency: distinguishing recorded hourly AQI from pollutant-derived daily AQI, preserving missing values, and avoiding leakage in model evaluation. It provides a verified, reproducible analysis and an honest evaluation of next-day AQI prediction, including a persistence baseline.
+
+---
+
+## 6. Materials and Methods
+
+### 6.1 Software and Tools
+
+- Python 3.12.10
+- pandas 3.1.0, NumPy 2.4.4, scikit-learn 1.9.1, SciPy 1.17.1, Matplotlib 3.10.8, Seaborn 0.13.2
+- pytest (29 tests passing per `test_run2.txt`)
+- No `requirements.txt` or `README.md` found in workspace.
+
+### 6.2 Data Sources
+
+1. **CPCB hourly pollutant/AQI data** (CSV, with metadata rows):
+   - `data/raw/cpcb_hourly_2023-01-01_2024-02-29.csv` (11,089 rows, 2023-01-01 to 2024-02-29)
+   - `data/raw/cpcb_hourly_2024-01-01_2026-01-06.csv` (18,337 rows, 2024-01-01 to 2026-01-06)
+   - Columns: `From Date`, `To Date`, `PM2.5 (ug/m3)`, `PM10 (ug/m3)`, `NO2 (ug/m3)`, `SO2 (ug/m3)`, `NH3 (ug/m3)`, `CO (mg/m3)`, `O3 (ug/m3)`, `AQI`, `Prominent pollutant(s)`.
+   - Hourly data has metadata header rows (`Country`, `State`, `City`, `Station`, `Latitude`, `Longitude`, `Elevation`); `verify_candidate_dataset.py` skips them.
+2. **Winter subsets:**
+   - `data/raw/winter/cpcb_hourly_2023_winter.csv` (2,160 rows, 90 days)
+   - `data/raw/winter/cpcb_hourly_2024_winter.csv` (2,184 rows, 91 days)
+   - `data/raw/winter/cpcb_hourly_2025_winter.csv` (2,160 rows, 90 days)
+3. **Validated daily AQI dataset:** `data/processed/peenya_aqi_2024_2025_validated_estimates.csv` (731 rows, 2024-01-01 to 2025-12-31; 668 valid AQI).
+4. **Track 2 inputs:** `data/processed/winter_pollutant_daily_2024_2025.csv` (140 rows, validated winter days).
+5. **Next-day prediction dataset:** `data/processed/next_day_aqi_dataset.csv` (2,586 rows, 2024-01-01 to 2025-12-31) built by `src/next_day_aqi_prediction.py`.
+6. **Metadata:** `data/metadata/cpcb_aqi_breakpoints.csv` (CPCB breakpoint table).
+
+### 6.3 Data Cleaning and Missing-Data Handling
+
+- Hourly rows parsed with `dayfirst=True`; metadata rows skipped.
+- Duplicate `(date, hour)` rows collapsed by mean; out-of-range hour rows dropped.
+- Daily aggregates: mean, min, max, std; `valid_hours` count; `data_completeness_pct = valid_hours/24*100`.
+- Missing values preserved (not interpolated) in verified dataset.
+- Next-day model: missing predictors imputed with training medians; imputation indicators created (`*_missing` columns). Missing target/lag rows excluded.
+- Winter daily data completeness threshold not explicitly stated; descriptive stats use available days.
+
+### 6.4 CPCB AQI Methodology
+
+- CPCB AQI (Indian NAQI) computed as maximum of pollutant sub-indices (PM2.5, PM10, NO2, SO2, NH3, CO, O3) using CPCB breakpoint tables.
+- Prominent pollutant = pollutant with the maximum sub-index.
+- Daily AQI for pollutant-derived days = daily max sub-index (from daily mean concentrations, or as per code).
+- Recorded AQI (Winter 2023) = daily average of CPCB hourly AQI values.
+- Categories: Good (0-50), Satisfactory (51-100), Moderate (101-200), Poor (201-300), Very Poor (301-400), Severe (401-500).
+
+### 6.5 Dataset Verification (Step 2)
+
+- `src/verify_candidate_dataset.py` independently recomputes daily AQI from hourly CPCB data and compares to candidate daily dataset.
+- Candidate: `peenya_aqi_2024_2025_validated_estimates.csv`.
+- Metrics: `outputs/tables/step2_candidate_verification_metrics.csv`.
+- Winter coverage: `outputs/tables/step2_winter_coverage_audit.csv`.
+
+### 6.6 Workflow (Steps/Tracks)
+
+- Step 2: Dataset verification (script `src/verify_candidate_dataset.py`).
+- Track 1: Seasonal (winter) AQI analysis (`src/track1_seasonal_analysis.py`).
+- Track 2: Pollutant dynamics and dominance (`src/track2_pollutant_analysis.py`).
+- Step 5: Next-day AQI prediction (`src/next_day_aqi_prediction.py`).
+- CPCB calculator utility: `src/cpcb_calculator.py` (breakpoint sub-index calculation, validated by 18 tests).
+
+---
+## 7. Study Dates and Analysis Methods
+
+### 7.1 Winter Periods (Exact)
+
+| Winter | Calendar dates | Days | Measurement method | Valid days | Missing |
+|---|---|---|---|---|---|
+| Winter 2023 | 2022-12-01 to 2023-02-28 | 90 | Recorded CPCB hourly AQI averaged by day | 90 | 0 |
+| Winter 2024 (Dec 2023) | 2023-12-01 to 2023-12-31 | 31 | Recorded CPCB hourly AQI averaged by day | 31 | 0 |
+| Winter 2024 (Jan-Feb 2024) | 2024-01-01 to 2024-02-29 | 60 | Pollutant-derived daily AQI (max sub-index) | 59 | 1 (2024-02-22) |
+| Winter 2024 (Overall) | 2023-12-01 to 2024-02-29 | 91 | Hybrid | 90 | 1 |
+| Winter 2025 | 2024-12-01 to 2025-02-28 | 90 | Pollutant-derived daily AQI (max sub-index) | 81 | 9 |
+
+### 7.2 Daily Processing
+
+- Hourly CPCB data aggregated to daily level: mean/min/max/std of each pollutant, valid hours, completeness percentage.
+- Recorded AQI days: daily mean of CPCB hourly AQI.
+- Pollutant-derived days: CPCB AQI from daily mean pollutant concentrations.
+
+### 7.3 Recorded vs Pollutant-Derived AQI
+
+- Winter 2023 uses recorded hourly AQI (CPCB-provided AQI column) averaged by day.
+- Winter 2024 Dec uses recorded hourly AQI.
+- Winter 2024 Jan-Feb and Winter 2025 use pollutant-derived AQI computed from pollutant concentrations via CPCB breakpoints.
+- The two methods are not interchangeable; direct year-to-year comparison is not justified.
+
+### 7.4 Coverage Differences
+
+- Winter 2023: 100% coverage (90/90).
+- Winter 2024: 98.9% (90/91); missing 2024-02-22.
+- Winter 2025: 90.0% (81/90); missing 9 days (2024-12-07, 2025-02-05, 02-06, 02-08, 02-09, 02-10, 02-11, 02-21, 02-22).
+
+### 7.5 Track 1 Methods
+
+- Seasonal descriptive statistics: mean, std, median, Q1, Q3, IQR, min, max, valid/missing days, completeness %.
+- Monthly aggregation and AQI category distribution.
+- Outputs: `outputs/tables/track1_seasonal_summary.csv`, `track1_monthly_summary.csv`, `track1_category_distribution.csv`; figures in `outputs/figures/`.
+
+### 7.6 Track 2 Methods
+
+- Pollutant dominance: count days where each pollutant is the prominent (max sub-index) pollutant.
+- Correlation: Pearson and Spearman among pollutant sub-indices/concentrations; PM2.5-PM10 specifically.
+- PM2.5/PM10 ratio analysis by period.
+- Diurnal and monthly pollutant profiles.
+- Outputs: `outputs/tables/track2_pollutant_dominance.csv`, `track2_correlation_subindices.csv`, `track2_pm_ratio_summary.csv`, `track2_diurnal_profiles.csv`, `track2_monthly_profiles.csv`.
+
+---
+
+## 8. Winter AQI Trend Analysis (Track 1 Results)
+
+### 8.1 Seasonal Summary
+
+| Period | Method | Days | Valid | Missing | Completeness % | Mean | SD | Median | Min | Max |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Winter 2023 | Recorded hourly AQI avg | 90 | 90 | 0 | 100.0 | 71.86 | 49.64 | 53.96 | 39.00 | 250.42 |
+| Winter 2024 (Dec 2023) | Recorded hourly AQI avg | 31 | 31 | 0 | 100.0 | 80.89 | 19.52 | 84.83 | 37.75 | 120.55 |
+| Winter 2024 (Jan-Feb 2024) | Pollutant-derived | 60 | 59 | 1 | 98.33 | 84.90 | 23.08 | 82.87 | 45.39 | 129.14 |
+| Winter 2024 (Overall) | Hybrid | 91 | 90 | 1 | 98.90 | 83.52 | 21.89 | 82.97 | 37.75 | 129.14 |
+| Winter 2025 | Pollutant-derived | 90 | 81 | 9 | 90.00 | 82.72 | 12.95 | 84.46 | 45.57 | 106.42 |
+
+(Source: `outputs/tables/track1_seasonal_summary.csv`.)
+
+### 8.2 Category Distribution
+
+| Period | Total days | Good | Satisfactory | Moderate | Poor | Very Poor | Severe | Missing/Invalid |
+|---|---|---|---|---|---|---|---|---|
+| Winter 2023 | 90 | 37 (41.1%) | 39 (43.3%) | 8 (8.9%) | 6 (6.7%) | 0 | 0 | 0 |
+| Winter 2024 | 91 | 5 (5.5%) | 67 (73.6%) | 18 (19.8%) | 0 | 0 | 0 | 1 (1.1%) |
+| Winter 2025 | 90 | 2 (2.2%) | 73 (81.1%) | 6 (6.7%) | 0 | 0 | 0 | 9 (10.0%) |
+
+(Source: `outputs/tables/track1_category_distribution.csv`.)
+
+### 8.3 Observations and Caveats
+
+- Winter 2023 has the lowest mean recorded AQI (71.86) but the highest volatility (SD 49.64) and the only Poor days (6).
+- Winter 2024 and 2025 means are higher (~83-84) but less variable; Winter 2025 has the tightest distribution (SD 12.95).
+- Winter 2023's high volatility may reflect episodic pollution events; recorded hourly AQI can spike.
+- Category distributions differ partly due to method differences (recorded vs pollutant-derived), so direct comparison is cautioned.
+- No Poor/Very Poor/Severe days in Winter 2024 or 2025 validated data.
+
+---
+
+## 9. Pollutant Dynamics and Dominance (Track 2 Results)
+
+### 9.1 Pollutant Dominance (validated winter days)
+
+| Period | PM2.5 | PM10 | NO2 | SO2 | NH3 | CO | O3 | Total valid days |
+|---|---|---|---|---|---|---|---|---|
+| Combined (140 days) | 2 (1.4%) | 117 (83.6%) | 0 | 0 | 0 | 7 (5.0%) | 14 (10.0%) | 140 |
+| Winter 2024 (Jan-Feb) | 2 (3.4%) | 38 (64.4%) | 0 | 0 | 0 | 5 (8.5%) | 14 (23.7%) | 59 |
+| Winter 2025 | 0 | 79 (97.5%) | 0 | 0 | 0 | 2 (2.5%) | 0 | 81 |
+
+(Source: `outputs/tables/track2_pollutant_dominance.csv`.)
+
+### 9.2 Correlations (sub-indices / concentrations)
+
+- PM2.5 vs PM10: Pearson r = 0.881, Spearman rho = 0.889 (N = 139).
+- Full correlation matrix available in `outputs/tables/track2_correlation_subindices.csv`.
+- Notable: SO2-O3 moderate positive (r ~0.48); PM2.5/PM10 negatively correlated with NO2/SO2.
+
+### 9.3 PM2.5/PM10 Ratio
+
+| Period | N | Mean | SD | Median | Min | Max |
+|---|---|---|---|---|---|---|
+| Combined | 139 | 0.4981 | 0.0684 | 0.5094 | 0.3031 | 0.7021 |
+| Winter 2024 (Jan-Feb) | 58 | 0.4832 | 0.1044 | 0.4596 | 0.3031 | 0.7021 |
+| Winter 2025 | 81 | 0.5088 | 0.0043 | 0.5094 | 0.4713 | 0.5111 |
+
+(Source: `outputs/tables/track2_pm_ratio_summary.csv`.)
+
+### 9.4 Diurnal and Monthly Profiles
+
+- Diurnal profiles: `outputs/tables/track2_diurnal_profiles.csv` and figure `outputs/figures/track2_diurnal_profiles.png`.
+- Monthly profiles: `outputs/tables/track2_monthly_profiles.csv` and figure `outputs/figures/track2_monthly_profiles.png`.
+- (Detailed hourly/monthly values not transcribed; reference these files.)
+
+---
+## 10. Machine Learning Methodology (Step 5)
+
+### 10.1 Dataset and Target
+
+- Source: `data/processed/next_day_aqi_dataset.csv` (2,586 rows; 2024-01-01 to 2025-12-31).
+- Task: predict next-day AQI (`target_AQI`) from current-day features.
+- Features: PM2.5_t, PM10_t, NO2_t, CO_t, O3_t, AQI_t, AQI_t_minus_1, month, day_of_year.
+- Rows with missing target or lag excluded.
+
+### 10.2 Feature Engineering
+
+- `AQI_t`: current-day AQI (feature date).
+- `AQI_t_minus_1`: previous-day AQI.
+- `month`, `day_of_year`: calendar features.
+- Feature date = target date - 1 day; lag date = target date - 2 days.
+
+### 10.3 Imputation
+
+- Missing predictors imputed with training-set medians.
+- Binary missingness indicators (`*_missing`) added.
+- Medians: PM2.5_t 35.563; PM10_t 75.766; NO2_t 18.624; CO_t 0.831; O3_t 41.606; AQI_t 84.436; AQI_t_minus_1 83.07; month 1.0; day_of_year 30.0.
+- Imputation instances: 17 across 16 of 74 test dates (mostly CO_conc, O3_conc, PM2.5/PM10/NO2).
+
+### 10.4 Models and Hyperparameters (as in code)
+
+- **Persistence baseline:** predicts AQI_t as next-day AQI.
+- **Linear Regression:** scikit-learn LinearRegression (default).
+- **Random Forest:** RandomForestRegressor(n_estimators=300, min_samples_leaf=2, random_state=42, n_jobs=-1). Note: `final_project_report.md` mentions max_depth=8, min_samples_leaf=3; code does NOT set max_depth and uses min_samples_leaf=2. Report this discrepancy.
+- **Gradient Boosting:** GradientBoostingRegressor(n_estimators=200, learning_rate=0.05, max_depth=2, random_state=42). Note: report mentions subsample=0.8; code does not set subsample (default 1.0). Report discrepancy.
+
+### 10.5 Train/Test Split (chronological)
+
+- Train: targets 2024-01-03 to 2024-02-29; 55 examples; feature dates 2024-01-02 to 2024-02-28.
+- Test: targets 2024-12-01 to 2025-02-28; 74 examples; feature dates 2024-11-30 to 2025-02-27.
+- Split is by date, not random, to avoid leakage.
+
+---
+## 11. Results and Discussion
+
+### 11.1 Dataset Verification (Step 2)
+
+- Total calendar days: 731 (2024-01-01 to 2025-12-31).
+- Valid candidate AQI: 668; valid recalculated: 668; validity mismatches: 0.
+- Exact matches: 124; within 0.01: 668; within 0.10: 668; mismatches >0.10: 0.
+- Max abs diff: 0.0005; mean abs diff: 0.000255.
+- Prominent pollutant agreement: 100%.
+- Winter coverage: Winter 2024 (Jan-Feb): expected 60, valid 59, missing 1 (2024-02-22); Winter 2025: expected 90, valid 81, missing 9.
+
+### 11.2 Winter Summary (Track 1)
+
+See Section 8.1-8.2. Winter 2023 has highest volatility and only Poor days; Winter 2025 has lowest volatility and highest Satisfactory share.
+
+### 11.3 Pollutant Findings (Track 2)
+
+- PM10 dominates winter days (83.57% overall; 97.53% in Winter 2025).
+- O3 dominates 10% overall (23.7% in Winter 2024 Jan-Feb, 0% in Winter 2025).
+- CO dominates 5% overall.
+- PM2.5-PM10 strongly correlated (r=0.881).
+- PM2.5/PM10 ratio ~0.50, slightly lower in Winter 2024 (0.483) vs Winter 2025 (0.509).
+
+### 11.4 Model Comparison (Step 5)
+
+| Model | N test | MAE | RMSE | R2 | MAE diff vs persistence | RMSE diff vs persistence |
+|---|---|---|---|---|---|---|
+| Persistence baseline | 74 | 9.25 | 11.92 | 0.195 | 0.00 | 0.00 |
+| Linear Regression | 74 | 33.85 | 46.71 | -11.36 | +24.60 | +34.79 |
+| Random Forest | 74 | 10.54 | 13.49 | -0.032 | +1.28 | +1.57 |
+| Gradient Boosting | 74 | 12.41 | 15.66 | -0.389 | +3.15 | +3.74 |
+
+(Source: `outputs/tables/next_day_aqi_model_metrics.csv`.)
+
+- Persistence baseline has the lowest MAE and RMSE.
+- Random Forest is closest among ML models but still worse than persistence.
+- Linear Regression performs very poorly (R2 -11.36), likely due to seasonal/domain shift and small training set.
+- No model achieves positive R2 except persistence (0.195).
+
+### 11.5 Feature Importance
+
+Random Forest top features: PM10_t (0.262), PM2.5_t (0.217), AQI_t (0.150), AQI_t_minus_1 (0.090), NO2_t (0.089), CO_t (0.085). Gradient Boosting top: PM2.5_t (0.262), AQI_t_minus_1 (0.179), PM10_t (0.191), O3_t (0.088), AQI_t (0.082). Month importance ~0 in both.
+
+(Source: `outputs/tables/next_day_aqi_feature_importance.csv`.)
+
+### 11.6 Interpretation and Caveats
+
+- Small samples (55 train / 74 test) limit model learning.
+- Training and test periods are different seasons (Jan-Feb 2024 vs Dec 2024-Feb 2025), causing domain shift.
+- 16 test dates had imputed predictors, adding uncertainty.
+- Persistence is a strong baseline for slowly varying AQI; ML models did not exploit enough signal.
+- Results should be presented as preliminary; no deployment or generalization claims.
+
+---
+## 12. Conclusion and Future Work
+
+### 12.1 Conclusion
+
+- The CPCB-derived daily AQI dataset was independently verified: 668 valid days, agreement within 0.0005 AQI units, 100% prominent-pollutant agreement, zero validity mismatches.
+- Winter AQI at Peenya across 2023-2025 was predominantly in Good/Satisfactory/Moderate categories; no Severe days observed in validated winter data.
+- PM10 is the dominant pollutant in winter (83.57% of validated winter days; 97.53% in Winter 2025).
+- PM2.5 and PM10 are strongly correlated (r=0.881).
+- Next-day AQI prediction: persistence baseline outperformed all tested ML models; results are preliminary.
+- Methodological distinction between recorded and pollutant-derived AQI is essential; direct year-to-year comparison is not justified.
+
+### 12.2 Future Work
+
+- Larger, multi-year training datasets with seasonal coverage.
+- Hyperparameter tuning and cross-validation; consider time-series models (ARIMA, LSTM, Prophet).
+- Include meteorological features (temperature, humidity, wind, boundary layer).
+- Handle missing data with advanced imputation or model-based approaches.
+- Extend to other stations/cities and additional winters.
+- Operational validation and uncertainty quantification.
+
+---
+## 13. References (starter list)
+
+- Central Pollution Control Board (CPCB), India - National Air Quality Index (NAQI) methodology and breakpoints.
+- CPCB air quality monitoring data for Peenya station (site_163), Bengaluru.
+- scikit-learn documentation (RandomForestRegressor, GradientBoostingRegressor, LinearRegression).
+- pandas, NumPy, SciPy, Matplotlib, Seaborn documentation.
+- Project source code and reports in workspace `d:\7th Sem\AQI_Project`.
+
+> Add formal citations (authors, titles, years, URLs/DOIs) as required by the college.
+
+---
+## Appendix A - CPCB Breakpoint Tables
+
+- File: `data/metadata/cpcb_aqi_breakpoints.csv`.
+- Sub-index breakpoints for PM2.5, PM10, NO2, SO2, NH3, CO, O3.
+- Used by `src/cpcb_calculator.py` (functions: `calculate_sub_index`, `calculate_aqi`, `get_prominent_pollutant`).
+- Validated by 18 tests in `tests/test_cpcb_calculator.py`.
+
+## Appendix B - Dataset Descriptions
+
+| File | Rows | Description |
+|---|---|---|
+| `data/raw/cpcb_hourly_2023-01-01_2024-02-29.csv` | 11,089 | CPCB hourly data 2023-01-01 to 2024-02-29 |
+| `data/raw/cpcb_hourly_2024-01-01_2026-01-06.csv` | 18,337 | CPCB hourly data 2024-01-01 to 2026-01-06 |
+| `data/raw/winter/cpcb_hourly_2023_winter.csv` | 2,160 | Winter 2023 hourly (90 days) |
+| `data/raw/winter/cpcb_hourly_2024_winter.csv` | 2,184 | Winter 2024 hourly (91 days) |
+| `data/raw/winter/cpcb_hourly_2025_winter.csv` | 2,160 | Winter 2025 hourly (90 days) |
+| `data/processed/peenya_aqi_2024_2025_validated_estimates.csv` | 731 | Validated daily AQI 2024-2025 |
+| `data/processed/winter_pollutant_daily_2024_2025.csv` | 140 | Validated winter pollutant daily data |
+| `data/processed/next_day_aqi_dataset.csv` | 2,586 | Next-day prediction dataset |
+| `data/metadata/cpcb_aqi_breakpoints.csv` | - | CPCB breakpoint table |
+
+## Appendix C - Output Tables and Figures Index
+
+**Tables (`outputs/tables/`):**
+- `step2_candidate_verification_metrics.csv`
+- `step2_winter_coverage_audit.csv`
+- `track1_seasonal_summary.csv`, `track1_monthly_summary.csv`, `track1_category_distribution.csv`
+- `track2_pollutant_dominance.csv`, `track2_correlation_subindices.csv`, `track2_pm_ratio_summary.csv`, `track2_diurnal_profiles.csv`, `track2_monthly_profiles.csv`
+- `next_day_aqi_dataset_summary.csv`, `next_day_aqi_split_summary.csv`, `next_day_aqi_imputation_medians.csv`, `next_day_aqi_test_exclusion_audit.csv`
+- `next_day_aqi_model_metrics.csv`, `next_day_aqi_feature_importance.csv`, `next_day_aqi_predictions.csv`
+
+**Figures (`outputs/figures/`):**
+- `track1_seasonal_boxplot.png`, `track1_monthly_timeseries.png`, `track1_category_distribution.png`
+- `track2_diurnal_profiles.png`, `track2_monthly_profiles.png`
+- `next_day_aqi_actual_vs_predicted.png`, `next_day_aqi_residuals.png`
+
+## Appendix D - Test Summary
+
+- `tests/test_cpcb_calculator.py`: 18 tests (sub-index calculation, AQI aggregation, prominent pollutant, edge cases).
+- `tests/test_next_day_aqi_prediction.py`: 11 tests (feature building, imputation, split, metrics).
+- Total: 29 tests; result: 29 passed, 0 failed (`test_run2.txt`).
+
+## Appendix E - Discrepancies Between Code and Final Report Draft
+
+The existing `reports/final_project_report.md` states hyperparameters that differ from `src/next_day_aqi_prediction.py`:
+1. Random Forest: report says "max depth 8, min samples leaf 3"; code uses `min_samples_leaf=2` and no `max_depth`.
+2. Gradient Boosting: report says "subsample 0.8"; code does not set `subsample` (default 1.0).
+
+When writing the final report, use the code values (source of truth) or update code; do not silently mix.
+
+## Appendix F - Files Inspected
+
+Source code: `src/cpcb_calculator.py`, `src/verify_candidate_dataset.py`, `src/track1_seasonal_analysis.py`, `src/track2_pollutant_analysis.py`, `src/next_day_aqi_prediction.py`.
+Reports: `reports/final_project_file_index.md`, `reports/final_project_report.md`, `reports/step2_dataset_verification_report.md`, `reports/step5_next_day_aqi_prediction_report.md`, `reports/track1_three_winter_analysis_report.md`, `reports/track2_pollutant_dynamics_report.md`.
+Tests: `tests/test_cpcb_calculator.py`, `tests/test_next_day_aqi_prediction.py`, `test_run2.txt`.
+
+---
+
+*End of reference document.*
